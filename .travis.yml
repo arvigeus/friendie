@@ -5,17 +5,17 @@ cache:
 notifications:
   email: false
 node_js:
-  - '10'
+  - "10"
 before_install:
   - npm install -g npm@latest
   - npm install -g greenkeeper-lockfile@1
 install:
-  - npm run lint
   - npm install
   - npm install -g codecov
 before_script: greenkeeper-lockfile-update
 script:
   - commitlint-travis
+  - npm run lint
   - npm run test
   - codecov
 after_script: greenkeeper-lockfile-upload
