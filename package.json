@@ -1,0 +1,120 @@
+{
+  "name": "friendie",
+  "version": "0.0.0-development",
+  "description": "A social framework for building friendships",
+  "private": true,
+  "dependencies": {
+    "@types/jest": "23.3.10",
+    "@types/node": "10.12.11",
+    "@types/react": "16.7.11",
+    "@types/react-dom": "16.0.11",
+    "react": "^16.7.0-alpha.2",
+    "react-cache": "^2.0.0-alpha.1",
+    "react-dom": "^16.7.0-alpha.2",
+    "react-scripts": "2.1.1",
+    "typescript": "3.2.1"
+  },
+  "scripts": {
+    "start": "react-scripts start",
+    "build": "react-scripts build",
+    "test": "react-scripts test",
+    "eject": "react-scripts eject",
+    "lint:typescript": "tslint 'src/**/*.{ts,tsx}' '*.{ts,tsx}'",
+    "lint": "run-s lint:typescript",
+    "format:typescript": "prettier-tslint fix 'src/**/*.{ts,tsx}'",
+    "format:files": "prettier --write '{src,docs}/**/*.{json,md,mdx,html,yaml,graphql}' '*.{json,md,mdx,html,yaml,graphql}'",
+    "format": "run-s format:typescript format:files",
+    "analyze": "npm run build -- --stats && webpack-bundle-analyzer build/bundle-stats.json",
+    "travis-deploy-once": "travis-deploy-once",
+    "semantic-release": "semantic-release",
+    "prepush": "run-s lint test",
+    "commit-cz": "npx git-cz"
+  },
+  "config": {
+    "commitizen": {
+      "path": "cz-conventional-changelog"
+    }
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "lint-staged",
+      "commit-msg": "commitlint -E HUSKY_GIT_PARAMS"
+    }
+  },
+  "lint-staged": {
+    "*.{js,jsx}": [
+      "prettier-tslint fix",
+      "git add"
+    ],
+    "*.{json,md,yaml,graphql}": [
+      "prettier --write",
+      "git add"
+    ]
+  },
+  "eslintConfig": {
+    "extends": "react-app",
+    "rules": {
+      "no-console": [
+        "error",
+        {
+          "allow": [
+            "warn",
+            "error"
+          ]
+        }
+      ]
+    }
+  },
+  "stylelint": {
+    "defaultSeverity": "warning",
+    "processors": [
+      "stylelint-processor-styled-components"
+    ],
+    "extends": [
+      "stylelint-config-recommended",
+      "stylelint-config-styled-components",
+      "stylelint-config-idiomatic-order",
+      "./node_modules/prettier-stylelint/config.js"
+    ],
+    "rules": {
+      "indentation": null
+    }
+  },
+  "browserslist": [
+    ">0.2%",
+    "not dead",
+    "not ie <= 11",
+    "not op_mini all"
+  ],
+  "devDependencies": {
+    "@commitlint/cli": "^7.2.1",
+    "@commitlint/config-conventional": "^7.1.2",
+    "@commitlint/travis-cli": "^7.2.1",
+    "commitizen": "^3.0.5",
+    "cz-conventional-changelog": "^2.1.0",
+    "husky": "^1.2.0",
+    "node": "10.13.0",
+    "npm-run-all": "^4.1.5",
+    "prettier": "^1.15.3",
+    "prettier-stylelint": "0.4.2",
+    "prettier-tslint": "^0.4.0",
+    "react-testing-library": "^5.3.1",
+    "semantic-release": "^15.12.3",
+    "stylelint": "^9.9.0",
+    "stylelint-config-idiomatic-order": "^6.2.0",
+    "stylelint-config-recommended": "^2.1.0",
+    "stylelint-config-styled-components": "^0.1.1",
+    "stylelint-processor-styled-components": "^1.5.1",
+    "travis-deploy-once": "^5.0.9",
+    "ts-jest": "^23.10.5",
+    "tslint": "^5.11.0",
+    "tslint-config-prettier": "^1.17.0",
+    "tslint-microsoft-contrib": "6.0.0",
+    "tslint-react": "^3.6.0",
+    "webpack-bundle-analyzer": "^3.0.3"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/arvigeus/friendie.git"
+  }
+}
