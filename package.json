@@ -19,6 +19,8 @@
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
+    "dev": "mdx-go --no-open docs",
+    "docs": "mdx-go build docs",
     "lint:typescript": "tslint 'src/**/*.{ts,tsx}' '*.{ts,tsx}'",
     "lint": "run-s lint:typescript",
     "format:typescript": "prettier-tslint fix 'src/**/*.{ts,tsx}'",
@@ -28,7 +30,7 @@
     "travis-deploy-once": "travis-deploy-once",
     "semantic-release": "semantic-release",
     "prepush": "run-s lint test",
-    "commit-cz": "npx git-cz"
+    "commit-cz": "git-cz"
   },
   "config": {
     "commitizen": {

@@ -16,6 +16,17 @@
       "preLaunchTask": "npm: start"
     },
     {
+      "name": "Documentation",
+      "type": "chrome",
+      "request": "launch",
+      "url": "http://localhost:8080",
+      "webRoot": "${workspaceRoot}/src",
+      "sourceMapPathOverrides": {
+        "webpack:///src/*": "${webRoot}/*"
+      },
+      "preLaunchTask": "npm: dev"
+    },
+    {
       "name": "Debug CRA Tests",
       "type": "node",
       "request": "launch",
