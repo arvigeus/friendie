@@ -8,6 +8,7 @@
   ],
   "rules": {
     "await-promise": true,
+    "export-name": false,
     "import-name": false,
     "new-parens": true,
     "no-angle-bracket-type-assertion": true,
@@ -21,9 +22,11 @@
     "no-floating-promises": true,
     "no-for-in-array": true,
     "no-implicit-dependencies": [true, "dev"],
+    "no-increment-decrement": false,
     "no-invalid-template-strings": true,
     "no-invalid-this": true,
     "no-namespace": true,
+    "no-null-keyword": false,
     "no-relative-imports": false,
     "no-sparse-arrays": true,
     "no-string-throw": true,
@@ -41,6 +44,7 @@
     "react-a11y-role": true,
     "react-a11y-role-has-required-aria-props": true,
     "react-a11y-role-supports-aria-props": true,
+    "typedef": false,
     "variable-name": false
   }
 }
