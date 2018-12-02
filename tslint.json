@@ -8,6 +8,7 @@
   ],
   "rules": {
     "await-promise": true,
+    "import-name": false,
     "new-parens": true,
     "no-angle-bracket-type-assertion": true,
     "no-conditional-assignment": true,
