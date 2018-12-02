@@ -1,7 +1,7 @@
 import { Head } from "mdx-go";
 import GlobalStyle from "../src/style/GlobalStyle.tsx";
 export const Root = props => (
-  <div>
+  <>
     <Head>
       <title>Friendie</title>
       <link
@@ -10,8 +10,8 @@ export const Root = props => (
       />
     </Head>
     <GlobalStyle />
-    {props.children}
-  </div>
+    <main>{props.children}</main>
+  </>
 );
 
 # Friendie
