@@ -10,7 +10,9 @@ interface IHandwriting {
   fontFamily?: string;
   fontSize?: string;
   speed?: number;
+  /** Will repeat the animation */
   loop?: boolean;
+  /** False will draw just the outline */
   fill?: boolean;
 }
 
@@ -36,6 +38,15 @@ const Handwriting = ({
       {text}
     </Cursive>
   );
+};
+
+Handwriting.defaultProps = {
+  color: "#495057",
+  fontFamily: "Sue Ellen Francisco, cursive",
+  fontSize: "50px",
+  speed: 7,
+  loop: true,
+  fill: true
 };
 
 export default Handwriting;
