@@ -31,6 +31,7 @@
     "no-single-line-block-comment": false,
     "no-sparse-arrays": true,
     "no-string-throw": true,
+    "no-submodule-imports": false,
     "no-switch-case-fall-through": true,
     "no-unused-expression": [true, "allow-fast-null-checks"],
     "triple-equals": true,
