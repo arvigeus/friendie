@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from "react";
+import { RefObject, useEffect, useMemo } from "react";
 
 interface IScribeOptions {
   speed: number;
@@ -7,7 +7,7 @@ interface IScribeOptions {
 }
 
 interface IUseScribe extends IScribeOptions {
-  ref?: any;
+  ref?: RefObject<HTMLCanvasElement>;
   text: string;
   color: string;
   fontFamily: string;
@@ -22,45 +22,64 @@ const useScribe = ({
   color,
   ...options
 }: IUseScribe) => {
-  useEffect(() => {
-    if (!ref || !ref.current) {
-      return;
-    }
-    const { current: parent } = ref;
-    const width = parent.clientWidth * 1.2;
-    const height = parent.clientHeight * 1.2;
+  const size = useMemo(
+    () => {
+      const span = document.createElement("span");
+      span.style.display = "inline-block";
+      span.style.position = "absolute";
+      span.style.top = `${Number.MIN_SAFE_INTEGER}px`;
+      span.style.left = `${Number.MIN_SAFE_INTEGER}px`;
+      span.style.whiteSpace = "nowrap";
+      span.style.fontSize = fontSize;
+      span.style.fontFamily = fontFamily;
+      span.appendChild(document.createTextNode(text));
+      document.body.appendChild(span);
+      const dimensions = {
+        width: span.clientWidth * 1.2,
+        height: span.clientHeight * 1.2
+      };
+      document.body.removeChild(span);
 
-    // remove contents and replace it with canvas
-    while (parent.firstChild) {
-      parent.removeChild(parent.firstChild);
-    }
-    const canvas = document.createElement("canvas");
-    canvas.setAttribute("width", `${width}px`);
-    canvas.setAttribute("height", `${height}px`);
-    parent.appendChild(canvas);
+      return dimensions;
+    },
+    [text, fontSize, fontFamily]
+  );
 
-    const ctx = canvas.getContext("2d");
-    if (ctx) {
-      ctx.font = `${fontSize} ${fontFamily}`;
-      ctx.lineWidth = 1;
-      ctx.lineJoin = "round"; // to avoid spikes we can join each line with a round joint
-      ctx.strokeStyle = ctx.fillStyle = color;
+  useEffect(
+    () => {
+      if (!ref || !ref.current) {
+        return;
+      }
+      const { current: canvas } = ref;
 
-      updateCanvas({
-        text,
-        ctx,
-        width,
-        height,
-        x: width * 0.02,
-        i: 0,
-        dashOffset: 220,
-        options
-      });
-    }
-  });
+      const ctx = canvas.getContext("2d");
+      if (ctx) {
+        ctx.font = `${fontSize} ${fontFamily}`;
+        ctx.lineWidth = 1;
+        ctx.lineJoin = "round"; // to avoid spikes we can join each line with a round joint
+        ctx.strokeStyle = ctx.fillStyle = color;
+
+        updateCanvas({
+          ref,
+          text,
+          ctx,
+          width: size.width,
+          height: size.height,
+          x: size.width * 0.02,
+          i: 0,
+          dashOffset: 220,
+          options
+        });
+      }
+    },
+    [text, color, fontSize, fontFamily]
+  );
+
+  return size;
 };
 
 interface IUpdateCanvas {
+  ref: RefObject<HTMLCanvasElement>;
   text: string;
   ctx: CanvasRenderingContext2D;
   width: number;
@@ -73,6 +92,7 @@ interface IUpdateCanvas {
 
 /* tslint:disable: no-parameter-reassignment */
 const updateCanvas = ({
+  ref,
   text,
   ctx,
   width,
@@ -82,6 +102,9 @@ const updateCanvas = ({
   dashOffset,
   options
 }: IUpdateCanvas) => {
+  if (!ref || !ref.current) {
+    return;
+  }
   const textVertPos = height * 0.675;
 
   // clear canvas for each frame
@@ -100,6 +123,7 @@ const updateCanvas = ({
   if (dashOffset > 0) {
     requestAnimationFrame(
       updateCanvas.bind(null, {
+        ref,
         text,
         ctx,
         width,
@@ -126,6 +150,7 @@ const updateCanvas = ({
     if (i < text.length) {
       requestAnimationFrame(
         updateCanvas.bind(null, {
+          ref,
           text,
           ctx,
           width,
@@ -140,6 +165,7 @@ const updateCanvas = ({
       // else repeat animation if requested
       setTimeout(
         updateCanvas.bind(null, {
+          ref,
           text,
           ctx,
           width,

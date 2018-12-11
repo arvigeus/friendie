@@ -9,7 +9,7 @@ export default {
         {
           rel: "stylesheet",
           href:
-            "https://fonts.googleapis.com/css?family=Sue+Ellen+Francisco|Annie+Use+Your+Telescope"
+            "https://fonts.googleapis.com/css?family=Neucha|Annie+Use+Your+Telescope"
         }
       ]
     }

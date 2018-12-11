@@ -1,5 +1,5 @@
 export const fonts = {
-  interface: "Sue Ellen Francisco, cursive",
+  interface: "Neucha, cursive",
   handwriting: "Annie Use Your Telescope, cursive"
 };
 

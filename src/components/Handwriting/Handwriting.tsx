@@ -1,7 +1,7 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, { useRef } from "react";
+import styled from "styled-components/macro";
 
 import { colors, fonts } from "../../style/theme";
-import Cursive from "./Cursive";
 import useScribe from "./useScribe";
 
 interface IHandwriting {
@@ -25,24 +25,24 @@ const Handwriting = ({
   loop = true,
   fill = true
 }: IHandwriting) => {
-  const ref = useRef(null);
-  useScribe({ ref, text, color, fontFamily, fontSize, speed, loop, fill });
+  const ref = useRef<HTMLCanvasElement>(null);
+  const { width, height } = useScribe({
+    ref,
+    text,
+    color,
+    fontFamily,
+    fontSize,
+    speed,
+    loop,
+    fill
+  });
 
-  return (
-    <Cursive
-      color={color}
-      fontFamily={fontFamily}
-      fontSize={fontSize}
-      ref={ref}
-    >
-      {text}
-    </Cursive>
-  );
+  return <canvas width={width} height={height} ref={ref} />;
 };
 
 Handwriting.defaultProps = {
   color: "#495057",
-  fontFamily: "Sue Ellen Francisco, cursive",
+  fontFamily: "Neucha, cursive",
   fontSize: "50px",
   speed: 7,
   loop: true,
