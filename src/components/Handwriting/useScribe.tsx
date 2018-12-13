@@ -52,6 +52,8 @@ const useScribe = ({
       }
       const { current: canvas } = ref;
 
+      const token = { cancel: false };
+
       const ctx = canvas.getContext("2d");
       if (ctx) {
         ctx.font = `${fontSize} ${fontFamily}`;
@@ -59,18 +61,22 @@ const useScribe = ({
         ctx.lineJoin = "round"; // to avoid spikes we can join each line with a round joint
         ctx.strokeStyle = ctx.fillStyle = color;
 
-        updateCanvas({
-          ref,
+        updateCanvas(
           text,
           ctx,
-          width: size.width,
-          height: size.height,
-          x: size.width * 0.02,
-          i: 0,
-          dashOffset: 220,
-          options
-        });
+          size.width,
+          size.height,
+          size.width * 0.02,
+          0,
+          220,
+          options,
+          token
+        );
       }
+
+      return () => {
+        token.cancel = true;
+      };
     },
     [text, color, fontSize, fontFamily]
   );
@@ -78,31 +84,19 @@ const useScribe = ({
   return size;
 };
 
-interface IUpdateCanvas {
-  ref: RefObject<HTMLCanvasElement>;
-  text: string;
-  ctx: CanvasRenderingContext2D;
-  width: number;
-  height: number;
-  x: number;
-  i: number;
-  dashOffset: number;
-  options: IScribeOptions;
-}
-
 /* tslint:disable: no-parameter-reassignment */
-const updateCanvas = ({
-  ref,
-  text,
-  ctx,
-  width,
-  height,
-  x,
-  i,
-  dashOffset,
-  options
-}: IUpdateCanvas) => {
-  if (!ref || !ref.current) {
+const updateCanvas = (
+  text: string,
+  ctx: CanvasRenderingContext2D,
+  width: number,
+  height: number,
+  x: number,
+  i: number,
+  dashOffset: number,
+  options: IScribeOptions,
+  token: { cancel: boolean }
+) => {
+  if (token.cancel) {
     return;
   }
   const textVertPos = height * 0.675;
@@ -121,18 +115,8 @@ const updateCanvas = ({
 
   // char done? no, the loop
   if (dashOffset > 0) {
-    requestAnimationFrame(
-      updateCanvas.bind(null, {
-        ref,
-        text,
-        ctx,
-        width,
-        height,
-        x,
-        i,
-        dashOffset,
-        options
-      })
+    requestAnimationFrame(() =>
+      updateCanvas(text, ctx, width, height, x, i, dashOffset, options, token)
     );
   } else {
     // ok, outline done, lets fill its interior before next
@@ -148,33 +132,24 @@ const updateCanvas = ({
 
     // if we still have chars left, loop animation again for this char
     if (i < text.length) {
-      requestAnimationFrame(
-        updateCanvas.bind(null, {
-          ref,
-          text,
-          ctx,
-          width,
-          height,
-          x,
-          i,
-          dashOffset,
-          options
-        })
+      requestAnimationFrame(() =>
+        updateCanvas(text, ctx, width, height, x, i, dashOffset, options, token)
       );
     } else if (options.loop) {
       // else repeat animation if requested
       setTimeout(
-        updateCanvas.bind(null, {
-          ref,
-          text,
-          ctx,
-          width,
-          height,
-          x: width * 0.02,
-          i: 0,
-          dashOffset: 220,
-          options
-        }),
+        () =>
+          updateCanvas(
+            text,
+            ctx,
+            width,
+            height,
+            width * 0.02,
+            0,
+            220,
+            options,
+            token
+          ),
         500
       );
     }
