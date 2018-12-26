@@ -24,11 +24,13 @@
     "eject": "react-scripts eject",
     "docz:dev": "docz dev",
     "docz:build": "docz build",
-    "lint:typescript": "tslint 'src/**/*.{ts,tsx}' '*.{ts,tsx}'",
-    "lint": "run-s lint:typescript",
-    "format:typescript": "prettier-tslint fix 'src/**/*.{ts,tsx}'",
+    "lint:code": "eslint 'src/**/*.{js,jsx,ts,tsx}' '*.{js,jsx,ts,tsx}'",
+    "lint:styles": "stylelint 'src/**/*.{js,jsx,ts,tsx}'",
+    "lint": "run-s lint:code lint:styles",
+    "format:code": "prettier-eslint --write 'src/**/*.{js,jsx,ts,tsx}'",
+    "format:styles": "prettier-stylelint --write 'src/**/*.{js,jsx,ts,tsx}'",
     "format:files": "prettier --write '{src,docs}/**/*.{json,md,mdx,html,yaml,graphql}' '*.{json,md,mdx,html,yaml,graphql}'",
-    "format": "run-s format:typescript format:files",
+    "format": "run-s format:code format:styles format:files",
     "analyze": "npm run build -- --stats && webpack-bundle-analyzer build/bundle-stats.json",
     "travis-deploy-once": "travis-deploy-once",
     "semantic-release": "semantic-release",
@@ -48,7 +50,8 @@
   },
   "lint-staged": {
     "*.{js,jsx}": [
-      "prettier-tslint fix",
+      "prettier-eslint --write",
+      "prettier-stylelint --write",
       "git add"
     ],
     "*.{json,md,yaml,graphql}": [
@@ -57,7 +60,13 @@
     ]
   },
   "eslintConfig": {
-    "extends": "react-app",
+    "extends": [
+      "react-app"
+    ],
+    "parser": "eslint-plugin-typescript/parser",
+    "plugins": [
+      "typescript"
+    ],
     "rules": {
       "no-console": [
         "error",
@@ -99,12 +108,15 @@
     "cz-conventional-changelog": "^2.1.0",
     "docz": "^0.12.15",
     "docz-plugin-netlify": "^1.1.4",
+    "eslint-plugin-typescript": "^1.0.0-rc.0",
     "husky": "^1.2.0",
+    "lint-staged": "^8.1.0",
     "node": "10.13.0",
     "npm-run-all": "^4.1.5",
     "prettier": "^1.15.3",
+    "prettier-eslint": "8.8.2",
+    "prettier-eslint-cli": "4.7.1",
     "prettier-stylelint": "0.4.2",
-    "prettier-tslint": "^0.4.0",
     "react-testing-library": "^5.3.1",
     "semantic-release": "^15.12.3",
     "stylelint": "^9.9.0",
@@ -114,10 +126,6 @@
     "stylelint-processor-styled-components": "^1.5.1",
     "travis-deploy-once": "^5.0.9",
     "ts-jest": "^23.10.5",
-    "tslint": "^5.11.0",
-    "tslint-config-prettier": "^1.17.0",
-    "tslint-microsoft-contrib": "6.0.0",
-    "tslint-react": "^3.6.0",
     "url-loader": "^1.1.2",
     "webpack-bundle-analyzer": "^3.0.3"
   },

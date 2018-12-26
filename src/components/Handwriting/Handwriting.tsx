@@ -1,5 +1,4 @@
 import React, { useRef } from "react";
-import styled from "styled-components/macro";
 
 import { colors, fonts } from "../../style/theme";
 import useScribe from "./useScribe";

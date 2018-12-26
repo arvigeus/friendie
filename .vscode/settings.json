@@ -1,6 +1,6 @@
 {
   "prettier.stylelintIntegration": true,
-  "prettier.eslintIntegration": false,
+  "prettier.eslintIntegration": true,
   "editor.formatOnSave": true,
   "files.exclude": {
     "**/.git": true,
@@ -8,12 +8,10 @@
     "**/.hg": true,
     "**/CVS": true,
     "**/.DS_Store": true,
-    "**/node_modules": true,,
+    "**/node_modules": true,
     "**/.cache": true,
     "**/.docz": true,
     "**/.vscode": true
   },
-  "flowide.enabled": false,
-  "eslint.enable": false,
-  "prettier.tslintIntegration": true
+  "flow.enabled": false
 }
