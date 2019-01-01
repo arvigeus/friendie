@@ -10,6 +10,7 @@
     "@types/react-cache": "^2.0.0",
     "@types/react-dom": "16.0.11",
     "@types/styled-components": "^4.1.2",
+    "polished": "^2.3.1",
     "react": "^16.7.0-alpha.2",
     "react-cache": "^2.0.0-alpha.1",
     "react-dom": "^16.7.0-alpha.2",

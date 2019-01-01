@@ -1,0 +1,138 @@
+---
+name: Button
+menu: Components
+route: /components/input/button
+---
+
+import { Playground, PropsTable } from "docz";
+import Button from "./Button";
+import { colors } from "../../../style/theme";
+
+# Button
+
+Styled html button
+
+<PropsTable of={Button} />
+
+## Basic usage
+
+### Default
+
+<Playground>
+  <Button>Default</Button>
+</Playground>
+
+### Colors
+
+<Playground>
+  <div style={{ display: "flex", justifyContent: "space-between", marginBottom: "40px" }}>
+    <Button color="transparent" backgroundColor={colors.red}>
+      Red
+    </Button>
+    <Button color="transparent" backgroundColor={colors.green}>
+      Green
+    </Button>
+    <Button color="transparent" backgroundColor={colors.blue}>
+      Blue
+    </Button>
+    <Button color="transparent" backgroundColor={colors.pink}>
+      Pink
+    </Button>
+    <Button color={colors.lightBlack} backgroundColor={colors.yellow}>
+      Yellow
+    </Button>
+    <Button color="transparent" backgroundColor={colors.orange}>
+      Orange
+    </Button>
+  </div>
+
+  <div style={{ display: "flex", justifyContent: "space-between", marginBottom: "40px" }}>
+    <Button color={colors.red} backgroundColor="transparent">
+      Red
+    </Button>
+    <Button color={colors.green} backgroundColor="transparent">
+      Green
+    </Button>
+    <Button color={colors.blue} backgroundColor="transparent">
+      Blue
+    </Button>
+    <Button color={colors.pink} backgroundColor="transparent">
+      Pink
+    </Button>
+    <Button color={colors.yellow} backgroundColor="transparent">
+      Yellow
+    </Button>
+    <Button color={colors.orange} backgroundColor="transparent">
+      Orange
+    </Button>
+  </div>
+  <Button color="transparent" backgroundColor={colors.black}>Black</Button>
+</Playground>
+
+### Disabled
+
+<Playground>
+  <div
+    style={{
+      display: "flex",
+      justifyContent: "space-between",
+      marginBottom: "40px"
+    }}
+  >
+    <Button disabled color="transparent" backgroundColor={colors.red}>
+      Red
+    </Button>
+    <Button disabled color="transparent" backgroundColor={colors.green}>
+      Green
+    </Button>
+    <Button disabled color="transparent" backgroundColor={colors.blue}>
+      Blue
+    </Button>
+    <Button disabled color="transparent" backgroundColor={colors.pink}>
+      Pink
+    </Button>
+    <Button disabled color={colors.lightBlack} backgroundColor={colors.yellow}>
+      Yellow
+    </Button>
+    <Button disabled color="transparent" backgroundColor={colors.orange}>
+      Orange
+    </Button>
+  </div>
+  <div
+    style={{
+      display: "flex",
+      justifyContent: "space-between",
+      marginBottom: "40px"
+    }}
+  >
+    <Button disabled color={colors.red} backgroundColor="transparent">
+      Red
+    </Button>
+    <Button disabled color={colors.green} backgroundColor="transparent">
+      Green
+    </Button>
+    <Button disabled color={colors.blue} backgroundColor="transparent">
+      Blue
+    </Button>
+    <Button disabled color={colors.pink} backgroundColor="transparent">
+      Pink
+    </Button>
+    <Button disabled color={colors.yellow} backgroundColor="transparent">
+      Yellow
+    </Button>
+    <Button disabled color={colors.orange} backgroundColor="transparent">
+      Orange
+    </Button>
+  </div>
+  <div
+    style={{
+      display: "flex",
+      justifyContent: "space-around"
+    }}
+  >
+    <Button disabled>Default</Button>
+    <Button disabled color="transparent" backgroundColor={colors.black}>
+      Black
+    </Button>
+  </div>
+</Playground>
