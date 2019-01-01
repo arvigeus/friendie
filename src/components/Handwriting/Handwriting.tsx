@@ -3,11 +3,10 @@ import React, { useRef } from "react";
 import { colors, fonts } from "../../style/theme";
 import useScribe from "./useScribe";
 
-interface IHandwriting {
+import { IText } from "../Text";
+
+interface IHandwriting extends IText {
   text: string;
-  color?: string;
-  fontFamily?: string;
-  fontSize?: string;
   speed?: number;
   /** Will repeat the animation */
   loop?: boolean;
