@@ -1,5 +1,5 @@
 import React from "react";
-import styled, { css } from "styled-components";
+import styled, { css } from "styled-components/macro";
 import { ImgResource } from "the-platform";
 
 import { colors, fonts } from "../../style/theme";
