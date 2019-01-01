@@ -15,6 +15,7 @@
     "react-dom": "^16.7.0-alpha.2",
     "react-scripts": "2.1.1",
     "styled-components": "^4.1.2",
+    "the-platform": "^0.9.3",
     "typescript": "3.2.1"
   },
   "scripts": {

@@ -1,0 +1,51 @@
+---
+name: Picture
+menu: Components
+route: /components/picture
+---
+
+import { Playground, PropsTable } from "docz";
+import Picture from "./Picture";
+import Loading from "../Loading";
+import { photo } from "../../lib/aspect-ratio";
+
+export default ({ children }) => <Loading>{children}</Loading>;
+
+# Picture
+
+<PropsTable of={Picture} />
+
+## Basic usage
+
+### Normal
+
+<Playground>
+  <Picture src="https://placeimg.com/640/480/nature?1" />
+</Playground>
+
+### With text
+
+<Playground>
+  <Picture
+    src="https://placeimg.com/640/480/nature?2"
+    name="A breathtaking view..."
+  />
+</Playground>
+
+### Grayscale
+
+<Playground>
+  <Picture src="https://placeimg.com/640/480/nature?3" grayscale />
+</Playground>
+
+### Custom aspect ration
+
+<Playground>
+  <div style={{ width: 350 }}>
+    <Picture
+      src="https://placeimg.com/350/450/people"
+      name="Bestie"
+      aspectRatio={photo}
+    />
+  </div>
+</Playground>
