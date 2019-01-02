@@ -73,6 +73,7 @@ const imgStyle = css`
 const Photo = styled.div`
   padding-bottom: ${({ aspectRatio }: IPhoto) => `${aspectRatio}%`};
   background-image: url('${({ src }: IPhoto) => src}');
+  background-size: cover;
   border-radius: 2px;
   ${imgStyle};
 `;

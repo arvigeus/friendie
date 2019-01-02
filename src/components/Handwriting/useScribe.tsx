@@ -84,7 +84,6 @@ const useScribe = ({
   return size;
 };
 
-/* tslint:disable: no-parameter-reassignment */
 const updateCanvas = (
   text: string,
   ctx: CanvasRenderingContext2D,
@@ -155,6 +154,5 @@ const updateCanvas = (
     }
   }
 };
-/* tslint:enable: no-parameter-reassignment */
 
 export default useScribe;

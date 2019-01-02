@@ -19,12 +19,12 @@
       "name": "Documentation",
       "type": "chrome",
       "request": "launch",
-      "url": "http://localhost:8080",
+      "url": "http://localhost:3000",
       "webRoot": "${workspaceRoot}/src",
       "sourceMapPathOverrides": {
         "webpack:///src/*": "${webRoot}/*"
       },
-      "preLaunchTask": "npm: dev"
+      "preLaunchTask": "npm: docz:dev"
     },
     {
       "name": "Debug CRA Tests",

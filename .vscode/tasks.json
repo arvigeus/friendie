@@ -25,7 +25,7 @@
     },
     {
       "type": "npm",
-      "script": "dev",
+      "script": "docz:dev",
       "group": {
         "kind": "test",
         "isDefault": true

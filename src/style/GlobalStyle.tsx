@@ -1,9 +1,8 @@
-import { createGlobalStyle } from "styled-components";
+import { createGlobalStyle } from "styled-components/macro";
 
 import background from "./diary.png";
 import { colors, fonts } from "./theme";
 
-// tslint:disable-next-line: typedef
 const GlobalStyle = createGlobalStyle`
   html,
   body {
@@ -51,7 +50,7 @@ const GlobalStyle = createGlobalStyle`
   main::before,
   main::after {
     border: 1px solid #bbb;
-    background-color: #eee;
+    background-color: ${colors.paper};
 
     /* Styles to distinguish sheets from one another */
     box-shadow: 1px 1px 1px rgba(0, 0, 0, 0.25);
