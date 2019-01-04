@@ -91,4 +91,4 @@ const Img = styled.div`
   }
 `;
 
-export default Picture;
+export default React.memo(Picture);

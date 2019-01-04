@@ -11,4 +11,4 @@ const Loading = ({ text = "Loading", children }: ILoading) => (
   <Suspense fallback={<Handwriting text={text} />}>{children}</Suspense>
 );
 
-export default Loading;
+export default React.memo(Loading);

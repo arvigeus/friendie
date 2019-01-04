@@ -47,4 +47,4 @@ Handwriting.defaultProps = {
   fill: true
 };
 
-export default Handwriting;
+export default React.memo(Handwriting);
