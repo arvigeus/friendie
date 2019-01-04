@@ -2,6 +2,7 @@
   "name": "friendie",
   "version": "0.0.0-development",
   "description": "A social framework for building friendships",
+  "license": "MIT",
   "private": true,
   "dependencies": {
     "@types/jest": "23.3.10",
