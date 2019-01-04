@@ -3,6 +3,13 @@ export const fonts = {
   handwriting: "Annie Use Your Telescope, cursive"
 };
 
+export const fontSizes = {
+  small: "12px",
+  normal: "16px",
+  medium: "22px",
+  large: "32px"
+};
+
 export const colors = {
   lightBlack: "#47462f",
   black: "#495057",

@@ -1,47 +1,77 @@
+import React from "react";
 import styled from "styled-components/macro";
 import { lighten, desaturate } from "polished";
 
-import { colors } from "../../../style/theme";
+import { colors, fonts } from "../../../style/theme";
 
-interface IButton {
-  color: string;
-  backgroundColor: string;
-  fontFamily: string;
-  fontSize: string;
+interface ButtonProps extends React.HTMLProps<HTMLButtonElement> {
+  /**
+   * Color of text
+   * @default #333
+   */
+  color?: string;
+  /**
+   * Background of the button. If set to "transparent", border-color is set to color property
+   * @default transparent
+   */
+  backgroundColor?: string;
+  /**
+   * Font family of text
+   * @default "Neucha, cursive"
+   */
+  fontFamily?: string;
+  /**
+   * Size of text
+   * @default 18px
+   */
+  fontSize?: string;
 }
 
-const colorFocus = ({ color, backgroundColor }: IButton) =>
+const colorFocus = ({
+  color = colors.black,
+  backgroundColor = "transparent"
+}: ButtonProps) =>
   backgroundColor === "transparent" || color === "transparent"
     ? colors.paper
     : lighten(0.05, color);
 
-const backgroundColorFocus = ({ color, backgroundColor }: IButton) =>
+const backgroundColorFocus = ({
+  color = colors.black,
+  backgroundColor = "transparent"
+}: ButtonProps) =>
   lighten(0.05, backgroundColor === "transparent" ? color : backgroundColor);
 
-const colorHover = ({ color, backgroundColor }: IButton) =>
+const colorHover = ({
+  color = colors.black,
+  backgroundColor = "transparent"
+}: ButtonProps) =>
   backgroundColor === "transparent" || color === "transparent"
     ? colors.paper
     : lighten(0.1, color);
 
-const backgroundColorHover = ({ color, backgroundColor }: IButton) =>
+const backgroundColorHover = ({
+  color = colors.black,
+  backgroundColor = "transparent"
+}: ButtonProps) =>
   backgroundColor === "transparent" ? color : lighten(0.1, backgroundColor);
 
-const colorDisabled = ({ color }: IButton) =>
+const colorDisabled = ({ color = colors.black }: ButtonProps) =>
   color !== "transparent" ? desaturate(0.2, color) : colors.paper;
 
-const Button = styled.button`
+const StyledButton = styled.button<ButtonProps>`
   display: inline-block;
   box-sizing: border-box;
   align-self: center;
   padding: 16px;
   border: solid 2px
-    ${({ color, backgroundColor }) =>
+    ${({ color = colors.black, backgroundColor = "transparent" }) =>
       backgroundColor !== "transparent" ? backgroundColor : color};
-  background: ${({ backgroundColor }: IButton) => backgroundColor};
+  background: ${({ backgroundColor = "transparent" }) => backgroundColor};
   border-radius: 255px 15px 225px 15px/15px 225px 15px 255px;
-  color: ${({ color }) => (color !== "transparent" ? color : colors.paper)};
-  font-family: ${({ fontFamily }: IButton) => fontFamily};
-  font-size: ${({ fontSize }: IButton) => fontSize};
+  color: ${({ color = colors.black }) =>
+    color !== "transparent" ? color : colors.paper};
+  font-family: ${({ fontFamily = fonts.interface }) => fontFamily};
+  font-size: ${({ fontSize = "18px" }) => fontSize};
   font-weight: 600;
   letter-spacing: 1px;
   text-align: center;
@@ -49,7 +79,7 @@ const Button = styled.button`
   transition: background-color ease 0.3s, border-color ease 0.3s;
 
   path {
-    fill: ${({ color }) => color};
+    fill: ${({ color = colors.black }) => color};
     transition: fill ease 0.3s;
   }
 
@@ -75,12 +105,15 @@ const Button = styled.button`
   }
 
   &:disabled {
-    border-color: ${({ color, backgroundColor }) =>
+    border-color: ${({
+      color = colors.black,
+      backgroundColor = "transparent"
+    }) =>
       desaturate(
         0.2,
         backgroundColor !== "transparent" ? backgroundColor : color
       )};
-    background: ${({ backgroundColor }) =>
+    background: ${({ backgroundColor = "transparent" }) =>
       backgroundColor !== "transparent"
         ? desaturate(0.2, backgroundColor)
         : backgroundColor};
@@ -93,11 +126,7 @@ const Button = styled.button`
   }
 `;
 
-Button.defaultProps = {
-  color: "#333", // colors.black
-  backgroundColor: "transparent",
-  fontFamily: "Neucha, cursive",
-  fontSize: "18px"
-};
+// @ts-ignore
+const Button = (props: ButtonProps) => <StyledButton {...props} />;
 
 export default Button;

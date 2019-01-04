@@ -3,14 +3,36 @@ import React, { useRef } from "react";
 import { colors, fonts } from "../../style/theme";
 import useScribe from "./useScribe";
 
-import { IText } from "../Text";
-
-interface IHandwriting extends IText {
+interface HandwritingProps {
   text: string;
+  /**
+   * Color of text
+   * @default #495057
+   */
+  color?: string;
+  /**
+   * Font family used
+   * @default "Neucha, cursive"
+   */
+  fontFamily?: string;
+  /**
+   * Size of text
+   * @default 50px
+   */
+  fontSize?: string;
+  /**
+   * Animation speed
+   * @default 7
+   */
   speed?: number;
-  /** Will repeat the animation */
+  /**
+   * Will repeat the animation
+   * @default true
+   */
   loop?: boolean;
-  /** False will draw just the outline */
+  /** False will draw just the outline
+   * @default true
+   */
   fill?: boolean;
 }
 
@@ -22,7 +44,7 @@ const Handwriting = ({
   speed = 7,
   loop = true,
   fill = true
-}: IHandwriting) => {
+}: HandwritingProps) => {
   const ref = useRef<HTMLCanvasElement>(null);
   const { width, height } = useScribe({
     ref,
@@ -36,15 +58,6 @@ const Handwriting = ({
   });
 
   return <canvas width={width} height={height} ref={ref} />;
-};
-
-Handwriting.defaultProps = {
-  color: "#495057",
-  fontFamily: "Neucha, cursive",
-  fontSize: "50px",
-  speed: 7,
-  loop: true,
-  fill: true
 };
 
 export default React.memo(Handwriting);

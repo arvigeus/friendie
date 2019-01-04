@@ -4,19 +4,42 @@ import { ImgResource } from "the-platform";
 
 import { colors, fonts } from "../../style/theme";
 
-import Text, { IText } from "../Text";
+import Text from "../Text";
 
-interface IPhoto {
-  src: string;
-  grayscale?: boolean;
-  aspectRatio: number;
-}
-
-interface IPicture extends IText {
-  src: string;
-  name?: string;
+interface PhotoProps {
   grayscale?: boolean;
   aspectRatio?: number;
+}
+
+interface PictureProps {
+  src: string;
+  /**
+   * Text below the picture */
+  name?: string;
+  /**
+   * Display as black and white
+   * @default false
+   */
+  grayscale?: boolean;
+  /**
+   * Height compared to width in percents. 100% is 1:1, 50% is 2:1, 120% is 6:5, etc...
+   */
+  aspectRatio?: number;
+  /**
+   * Requires name property
+   * @default #495057
+   */
+  color?: string;
+  /**
+   * Requires name property
+   * @default "Neucha, cursive"
+   */
+  fontFamily?: string;
+  /**
+   * Requires name property
+   * @default 32px
+   */
+  fontSize?: string;
 }
 
 const Picture = ({
@@ -26,16 +49,22 @@ const Picture = ({
   aspectRatio,
   color = colors.black,
   fontFamily = fonts.interface,
-  fontSize = "32px"
-}: IPicture) => {
+  fontSize = "32px",
+  ...props
+}: PictureProps) => {
   ImgResource.read(src);
   return (
     <Polaroid>
       {aspectRatio ? (
-        <Photo src={src} aspectRatio={aspectRatio} grayscale={grayscale} />
+        <Photo
+          {...props}
+          src={src}
+          aspectRatio={aspectRatio}
+          grayscale={grayscale}
+        />
       ) : (
         <Img grayscale={grayscale}>
-          <img alt={name} src={src} />
+          <img {...props} alt={name} src={src} />
         </Img>
       )}
       {name && (
@@ -47,13 +76,6 @@ const Picture = ({
   );
 };
 
-Picture.defaultProps = {
-  grayscale: false,
-  color: "#495057",
-  fontFamily: "Neucha, cursive",
-  fontSize: "32px"
-};
-
 const Polaroid = styled.div`
   padding: 10px;
   background: #fff;
@@ -62,17 +84,16 @@ const Polaroid = styled.div`
   text-decoration: none;
 `;
 
-const imgStyle = css`
+const imgStyle = css<PhotoProps>`
   display: block;
   width: 100%;
   box-shadow: 2px 2px 2px 0 #e7e8e8 inset, -2px -2px 2px 0 #e7e8e8 inset;
-  filter: ${({ grayscale }: { grayscale?: boolean }) =>
-    grayscale ? "grayscale(100%)" : "none"};
+  filter: ${({ grayscale }) => (grayscale ? "grayscale(100%)" : "none")};
 `;
 
-const Photo = styled.div`
-  padding-bottom: ${({ aspectRatio }: IPhoto) => `${aspectRatio}%`};
-  background-image: url('${({ src }: IPhoto) => src}');
+const Photo = styled.div<PictureProps>`
+  padding-bottom: ${({ aspectRatio }) => `${aspectRatio}%`};
+  background-image: url('${({ src }) => src}');
   background-size: cover;
   border-radius: 2px;
   ${imgStyle};

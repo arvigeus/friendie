@@ -1,14 +1,21 @@
 import styled from "styled-components";
+import React from "react";
 import { transparentize, darken } from "polished";
 
-interface INote extends HTMLDivElement {
-  backgroundColor: string;
+import { colors } from "../../style/theme";
+
+interface NoteProps extends React.HTMLProps<HTMLDivElement> {
+  /**
+   * Paper color
+   * @default #efeffe
+   */
+  backgroundColor?: string;
 }
 
-const Note = styled.div`
+const StyledNote = styled.div<NoteProps>`
   position: relative;
   padding: 10px 20px;
-  background: ${({ backgroundColor }: INote) => {
+  background: ${({ backgroundColor = colors.paper }) => {
     const lineColor = transparentize(0.96, darken(0.96, backgroundColor));
     return `
 	    linear-gradient(-90deg, ${lineColor} 1px, transparent 1px),
@@ -23,8 +30,7 @@ const Note = styled.div`
   box-shadow: 0 6px 8px rgba(0, 0, 0, 0.2);
 `;
 
-Note.defaultProps = {
-  backgroundColor: "#efeffe"
-};
+// @ts-ignore
+const Note = (props: NoteProps) => <StyledNote {...props} />;
 
 export default Note;
