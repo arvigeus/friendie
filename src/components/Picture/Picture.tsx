@@ -94,6 +94,7 @@ const imgStyle = css<PhotoProps>`
 const Photo = styled.div<PictureProps>`
   padding-bottom: ${({ aspectRatio }) => `${aspectRatio}%`};
   background-image: url('${({ src }) => src}');
+  background-position: center;
   background-size: cover;
   border-radius: 2px;
   ${imgStyle};
