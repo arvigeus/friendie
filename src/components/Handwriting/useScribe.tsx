@@ -1,18 +1,88 @@
 import { RefObject, useEffect, useMemo } from "react";
 
-interface IScribeOptions {
+interface ScribeOptions {
   speed: number;
   loop: boolean;
   fill: boolean;
 }
 
-interface IUseScribe extends IScribeOptions {
+interface ScribeProps extends ScribeOptions {
   ref?: RefObject<HTMLCanvasElement>;
   text: string;
   color: string;
   fontFamily: string;
   fontSize: string;
 }
+const updateCanvas = (
+  text: string,
+  ctx: CanvasRenderingContext2D,
+  width: number,
+  height: number,
+  x: number,
+  i: number,
+  dashOffset: number,
+  options: ScribeOptions,
+  token: { cancel: boolean }
+): void => {
+  if (token.cancel) {
+    return;
+  }
+  const textVertPos = height * 0.675;
+
+  // clear canvas for each frame
+  ctx.clearRect(x, 0, width - x, height);
+
+  // calculate and set current line-dash for this char
+  ctx.setLineDash([220 - dashOffset, dashOffset - options.speed]);
+
+  // reduce length of off-dash
+  dashOffset -= options.speed;
+
+  // draw char to canvas with current dash-length
+  ctx.strokeText(text[i], x, textVertPos);
+
+  // char done? no, the loop
+  if (dashOffset > 0) {
+    requestAnimationFrame(() =>
+      updateCanvas(text, ctx, width, height, x, i, dashOffset, options, token)
+    );
+  } else {
+    // ok, outline done, lets fill its interior before next
+    if (options.fill) {
+      ctx.fillText(text[i], x, textVertPos);
+    }
+
+    // reset line-dash length
+    dashOffset = 220;
+
+    // get x position to next char by measuring what we have drawn
+    x += ctx.measureText(text[i++]).width;
+
+    // if we still have chars left, loop animation again for this char
+    if (i < text.length) {
+      requestAnimationFrame(() =>
+        updateCanvas(text, ctx, width, height, x, i, dashOffset, options, token)
+      );
+    } else if (options.loop) {
+      // else repeat animation if requested
+      setTimeout(
+        () =>
+          updateCanvas(
+            text,
+            ctx,
+            width,
+            height,
+            width * 0.02,
+            0,
+            220,
+            options,
+            token
+          ),
+        500
+      );
+    }
+  }
+};
 
 const useScribe = ({
   ref,
@@ -21,7 +91,7 @@ const useScribe = ({
   fontFamily,
   color,
   ...options
-}: IUseScribe) => {
+}: ScribeProps): { width: number; height: number } => {
   const size = useMemo(
     () => {
       const span = document.createElement("span");
@@ -82,77 +152,6 @@ const useScribe = ({
   );
 
   return size;
-};
-
-const updateCanvas = (
-  text: string,
-  ctx: CanvasRenderingContext2D,
-  width: number,
-  height: number,
-  x: number,
-  i: number,
-  dashOffset: number,
-  options: IScribeOptions,
-  token: { cancel: boolean }
-) => {
-  if (token.cancel) {
-    return;
-  }
-  const textVertPos = height * 0.675;
-
-  // clear canvas for each frame
-  ctx.clearRect(x, 0, width - x, height);
-
-  // calculate and set current line-dash for this char
-  ctx.setLineDash([220 - dashOffset, dashOffset - options.speed]);
-
-  // reduce length of off-dash
-  dashOffset -= options.speed;
-
-  // draw char to canvas with current dash-length
-  ctx.strokeText(text[i], x, textVertPos);
-
-  // char done? no, the loop
-  if (dashOffset > 0) {
-    requestAnimationFrame(() =>
-      updateCanvas(text, ctx, width, height, x, i, dashOffset, options, token)
-    );
-  } else {
-    // ok, outline done, lets fill its interior before next
-    if (options.fill) {
-      ctx.fillText(text[i], x, textVertPos);
-    }
-
-    // reset line-dash length
-    dashOffset = 220;
-
-    // get x position to next char by measuring what we have drawn
-    x += ctx.measureText(text[i++]).width;
-
-    // if we still have chars left, loop animation again for this char
-    if (i < text.length) {
-      requestAnimationFrame(() =>
-        updateCanvas(text, ctx, width, height, x, i, dashOffset, options, token)
-      );
-    } else if (options.loop) {
-      // else repeat animation if requested
-      setTimeout(
-        () =>
-          updateCanvas(
-            text,
-            ctx,
-            width,
-            height,
-            width * 0.02,
-            0,
-            220,
-            options,
-            token
-          ),
-        500
-      );
-    }
-  }
 };
 
 export default useScribe;

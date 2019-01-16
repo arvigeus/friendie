@@ -31,6 +31,6 @@ const StyledNote = styled.div<NoteProps>`
 `;
 
 // @ts-ignore
-const Note = (props: NoteProps) => <StyledNote {...props} />;
+const Note = (props: NoteProps): React.ReactChild => <StyledNote {...props} />;
 
 export default Note;

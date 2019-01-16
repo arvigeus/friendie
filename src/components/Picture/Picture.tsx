@@ -51,7 +51,7 @@ const Picture = ({
   fontFamily = fonts.interface,
   fontSize = "32px",
   ...props
-}: PictureProps) => {
+}: PictureProps): React.ReactChild => {
   ImgResource.read(src);
   return (
     <Polaroid>
@@ -113,4 +113,5 @@ const Img = styled.div`
   }
 `;
 
-export default React.memo(Picture);
+// export default React.memo(Picture);
+export default Picture;

@@ -30,7 +30,7 @@ interface ButtonProps extends React.HTMLProps<HTMLButtonElement> {
 const colorFocus = ({
   color = colors.black,
   backgroundColor = "transparent"
-}: ButtonProps) =>
+}: ButtonProps): string =>
   backgroundColor === "transparent" || color === "transparent"
     ? colors.paper
     : lighten(0.05, color);
@@ -38,13 +38,13 @@ const colorFocus = ({
 const backgroundColorFocus = ({
   color = colors.black,
   backgroundColor = "transparent"
-}: ButtonProps) =>
+}: ButtonProps): string =>
   lighten(0.05, backgroundColor === "transparent" ? color : backgroundColor);
 
 const colorHover = ({
   color = colors.black,
   backgroundColor = "transparent"
-}: ButtonProps) =>
+}: ButtonProps): string =>
   backgroundColor === "transparent" || color === "transparent"
     ? colors.paper
     : lighten(0.1, color);
@@ -52,10 +52,10 @@ const colorHover = ({
 const backgroundColorHover = ({
   color = colors.black,
   backgroundColor = "transparent"
-}: ButtonProps) =>
+}: ButtonProps): string =>
   backgroundColor === "transparent" ? color : lighten(0.1, backgroundColor);
 
-const colorDisabled = ({ color = colors.black }: ButtonProps) =>
+const colorDisabled = ({ color = colors.black }: ButtonProps): string =>
   color !== "transparent" ? desaturate(0.2, color) : colors.paper;
 
 const StyledButton = styled.button<ButtonProps>`
@@ -126,7 +126,9 @@ const StyledButton = styled.button<ButtonProps>`
   }
 `;
 
-// @ts-ignore
-const Button = (props: ButtonProps) => <StyledButton {...props} />;
+const Button = (props: ButtonProps): React.ReactChild => (
+  // @ts-ignore
+  <StyledButton {...props} />
+);
 
 export default Button;

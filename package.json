@@ -64,6 +64,8 @@
   },
   "eslintConfig": {
     "extends": [
+      "plugin:typescript/recommended",
+      "prettier/typescript",
       "react-app"
     ],
     "parser": "eslint-plugin-typescript/parser",
@@ -112,7 +114,8 @@
     "docz": "^0.13.7",
     "docz-plugin-netlify": "^1.1.4",
     "docz-theme-default": "^0.13.7",
-    "eslint-plugin-typescript": "^1.0.0-rc.0",
+    "eslint-config-prettier": "^3.5.0",
+    "eslint-plugin-typescript": "^1.0.0-rc.3",
     "husky": "^1.2.0",
     "lint-staged": "^8.1.0",
     "node": "10.13.0",

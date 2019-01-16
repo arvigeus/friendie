@@ -44,7 +44,7 @@ const Handwriting = ({
   speed = 7,
   loop = true,
   fill = true
-}: HandwritingProps) => {
+}: HandwritingProps): React.ReactChild => {
   const ref = useRef<HTMLCanvasElement>(null);
   const { width, height } = useScribe({
     ref,
@@ -60,4 +60,5 @@ const Handwriting = ({
   return <canvas width={width} height={height} ref={ref} />;
 };
 
-export default React.memo(Handwriting);
+// export default React.memo(Handwriting);
+export default Handwriting;
