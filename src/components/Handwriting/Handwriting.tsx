@@ -16,10 +16,10 @@ interface HandwritingProps {
    */
   fontFamily?: string;
   /**
-   * Size of text
-   * @default 50px
+   * Size of text (in pixels)
+   * @default 50
    */
-  fontSize?: string;
+  fontSize?: number;
   /**
    * Animation speed
    * @default 7
@@ -40,14 +40,13 @@ const Handwriting = ({
   text,
   color = colors.black,
   fontFamily = fonts.interface,
-  fontSize = "50px",
+  fontSize = 50,
   speed = 7,
   loop = true,
   fill = true
 }: HandwritingProps): React.ReactChild => {
   const ref = useRef<HTMLCanvasElement>(null);
-  const { width, height } = useScribe({
-    ref,
+  const [width, height] = useScribe(ref, {
     text,
     color,
     fontFamily,

@@ -6,6 +6,7 @@ route: /components/handwriting
 
 import { Playground, PropsTable } from "docz";
 import Handwriting from "./Handwriting";
+import { colors, fonts } from "../../style/theme";
 
 # Handwriting
 
@@ -17,4 +18,26 @@ Animated text that is being written letter by letter
 
 <Playground>
   <Handwriting text="Handwriting" />
+</Playground>
+
+### Colors
+
+<Playground>
+  <Handwriting text="Red" color={colors.red} /> <br />
+  <Handwriting text="Green" color={colors.green} /> <br />
+  <Handwriting text="Blue" color={colors.blue} /> <br />
+  <Handwriting text="Pink" color={colors.pink} /> <br />
+  <Handwriting text="Yellow" color={colors.yellow} /> <br />
+  <Handwriting text="Orange" color={colors.orange} /> <br />
+</Playground>
+
+### Style
+
+<Playground>
+  <Handwriting text="Small" fontSize={28} /> <br />
+  <Handwriting text="No fill" fill={false} /> <br />
+  <Handwriting text="No loop" loop={false} /> <br />
+  <Handwriting text="Fast" speed={14} /> <br />
+  <Handwriting text="Slow" speed={4} /> <br />
+  <Handwriting text="Custom font" fontFamily={fonts.handwriting} /> <br />
 </Playground>

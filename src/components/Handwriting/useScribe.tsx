@@ -7,18 +7,29 @@ interface ScribeOptions {
 }
 
 interface ScribeProps extends ScribeOptions {
-  ref?: RefObject<HTMLCanvasElement>;
   text: string;
   color: string;
   fontFamily: string;
-  fontSize: string;
+  fontSize: number;
 }
+
+interface TextDescription {
+  char: string;
+  x: number;
+}
+
+interface Params {
+  width: number;
+  height: number;
+  textVertPos: number;
+}
+
+const DEFAULT_DASH_OFFSET = 220;
+
 const updateCanvas = (
-  text: string,
+  text: TextDescription[],
   ctx: CanvasRenderingContext2D,
-  width: number,
-  height: number,
-  x: number,
+  params: Params,
   i: number,
   dashOffset: number,
   options: ScribeOptions,
@@ -27,41 +38,44 @@ const updateCanvas = (
   if (token.cancel) {
     return;
   }
-  const textVertPos = height * 0.675;
+  const { width, height, textVertPos } = params;
 
   // clear canvas for each frame
-  ctx.clearRect(x, 0, width - x, height);
+  ctx.clearRect(text[i].x, 0, width - text[i].x, height);
+
+  // Redraw the last letter (some cursive fonts might be "cut" by ctx.clearRect)
+  if (i > 0) {
+    const prev = text[i - 1];
+    ctx.fillText(prev.char, prev.x, textVertPos);
+  }
 
   // calculate and set current line-dash for this char
-  ctx.setLineDash([220 - dashOffset, dashOffset - options.speed]);
+  ctx.setLineDash([
+    DEFAULT_DASH_OFFSET - dashOffset,
+    dashOffset - options.speed
+  ]);
 
   // reduce length of off-dash
   dashOffset -= options.speed;
 
   // draw char to canvas with current dash-length
-  ctx.strokeText(text[i], x, textVertPos);
+  ctx.strokeText(text[i].char, text[i].x, textVertPos);
 
   // char done? no, the loop
   if (dashOffset > 0) {
     requestAnimationFrame(() =>
-      updateCanvas(text, ctx, width, height, x, i, dashOffset, options, token)
+      updateCanvas(text, ctx, params, i, dashOffset, options, token)
     );
   } else {
     // ok, outline done, lets fill its interior before next
     if (options.fill) {
-      ctx.fillText(text[i], x, textVertPos);
+      ctx.fillText(text[i].char, text[i].x, textVertPos);
     }
 
-    // reset line-dash length
-    dashOffset = 220;
-
-    // get x position to next char by measuring what we have drawn
-    x += ctx.measureText(text[i++]).width;
-
     // if we still have chars left, loop animation again for this char
-    if (i < text.length) {
+    if (++i < text.length) {
       requestAnimationFrame(() =>
-        updateCanvas(text, ctx, width, height, x, i, dashOffset, options, token)
+        updateCanvas(text, ctx, params, i, DEFAULT_DASH_OFFSET, options, token)
       );
     } else if (options.loop) {
       // else repeat animation if requested
@@ -70,11 +84,9 @@ const updateCanvas = (
           updateCanvas(
             text,
             ctx,
-            width,
-            height,
-            width * 0.02,
+            params,
             0,
-            220,
+            DEFAULT_DASH_OFFSET,
             options,
             token
           ),
@@ -84,72 +96,80 @@ const updateCanvas = (
   }
 };
 
-const useScribe = ({
-  ref,
-  text,
-  fontSize,
-  fontFamily,
-  color,
-  ...options
-}: ScribeProps): { width: number; height: number } => {
-  const size = useMemo(
-    () => {
-      const span = document.createElement("span");
-      span.style.display = "inline-block";
-      span.style.position = "absolute";
-      span.style.top = `${Number.MIN_SAFE_INTEGER}px`;
-      span.style.left = `${Number.MIN_SAFE_INTEGER}px`;
-      span.style.whiteSpace = "nowrap";
-      span.style.fontSize = fontSize;
-      span.style.fontFamily = fontFamily;
-      span.appendChild(document.createTextNode(text));
-      document.body.appendChild(span);
-      const dimensions = {
-        width: span.clientWidth * 1.2,
-        height: span.clientHeight * 1.2
-      };
-      document.body.removeChild(span);
+const setContext = (
+  ctx: CanvasRenderingContext2D,
+  { color, fontSize, fontFamily }: ScribeProps
+): void => {
+  ctx.font = `${fontSize}px ${fontFamily}`;
+  ctx.lineWidth = 1;
+  ctx.lineJoin = "round"; // to avoid spikes we can join each line with a round joint
+  ctx.strokeStyle = ctx.fillStyle = color;
+};
 
-      return dimensions;
-    },
-    [text, fontSize, fontFamily]
-  );
+const useScribe = (
+  ref: RefObject<HTMLCanvasElement>,
+  props: ScribeProps
+): number[] => {
+  const { text, color, fontSize, fontFamily, ...options } = props;
+  const textProperties = [text, color, fontSize, fontFamily];
 
-  useEffect(
-    () => {
-      if (!ref || !ref.current) {
-        return;
-      }
-      const { current: canvas } = ref;
+  const size = useMemo(() => {
+    const ctx = document.createElement("canvas").getContext("2d");
+    if (!ctx) return [0, 0];
+    setContext(ctx, props);
+    return [
+      ctx.measureText(text).width,
+      fontSize * 1.4 // This is wrong way to do it, but there is no sane other option
+    ];
+  }, textProperties);
 
-      const token = { cancel: false };
+  useEffect(() => {
+    if (!ref || !ref.current) {
+      return;
+    }
+    const { current: canvas } = ref;
 
-      const ctx = canvas.getContext("2d");
-      if (ctx) {
-        ctx.font = `${fontSize} ${fontFamily}`;
-        ctx.lineWidth = 1;
-        ctx.lineJoin = "round"; // to avoid spikes we can join each line with a round joint
-        ctx.strokeStyle = ctx.fillStyle = color;
+    const token = { cancel: false };
+
+    const ctx = canvas.getContext("2d");
+    if (ctx) {
+      setContext(ctx, props);
+
+      // This bogus delay is needed to allow the canvas to update its properties before measuring text
+      setTimeout(() => {
+        const textProps = text
+          .split("")
+          .reduce((ac: TextDescription[], av: string): TextDescription[] => {
+            const last = ac.length > 0 ? ac[ac.length - 1] : null;
+            ac.push({
+              char: av,
+              x: last ? last.x + ctx.measureText(last.char).width : 0
+            });
+            return ac;
+          }, []);
+
+        const params = {
+          width: canvas.width,
+          height: canvas.height,
+          textVertPos: canvas.height * 0.675
+        };
 
         updateCanvas(
-          text,
+          textProps,
           ctx,
-          size.width,
-          size.height,
-          size.width * 0.02,
+          params,
           0,
-          220,
+          DEFAULT_DASH_OFFSET,
           options,
           token
         );
-      }
+      }, 50);
+    }
 
-      return () => {
-        token.cancel = true;
-      };
-    },
-    [text, color, fontSize, fontFamily]
-  );
+    return () => {
+      token.cancel = true;
+    };
+  }, textProperties);
 
   return size;
 };
