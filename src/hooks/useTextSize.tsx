@@ -1,12 +1,14 @@
 import { useMemo } from "react";
 
 interface TextStyle {
-  text: string;
   fontFamily: string;
   fontSize: number;
 }
 
-const useTextSize = ({ text, fontSize, fontFamily }: TextStyle): number[] =>
+const useTextSize = (
+  text: string,
+  { fontSize, fontFamily }: TextStyle
+): number[] =>
   useMemo(
     () => {
       const ctx = document.createElement("canvas").getContext("2d");

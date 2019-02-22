@@ -47,7 +47,7 @@ const Handwriting = ({
   fill = true
 }: HandwritingProps): React.ReactChild => {
   const ref = useRef<HTMLCanvasElement>(null);
-  const [width, height] = useTextSize({ text, fontFamily, fontSize });
+  const [width, height] = useTextSize(text, { fontFamily, fontSize });
   useScribe(ref, {
     text,
     color,
