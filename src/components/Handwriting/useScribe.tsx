@@ -1,4 +1,4 @@
-import { RefObject, useEffect, useMemo } from "react";
+import { RefObject, useEffect } from "react";
 
 interface ScribeOptions {
   speed: number;
@@ -44,7 +44,8 @@ const updateCanvas = (
   ctx.clearRect(text[i].x, 0, width - text[i].x, height);
 
   // Redraw the last letter (some cursive fonts might be "cut" by ctx.clearRect)
-  if (i > 0) {
+  // This will not work for outline only text
+  if (options.fill && i > 0) {
     const prev = text[i - 1];
     ctx.fillText(prev.char, prev.x, textVertPos);
   }
@@ -96,82 +97,63 @@ const updateCanvas = (
   }
 };
 
-const setContext = (
-  ctx: CanvasRenderingContext2D,
-  { color, fontSize, fontFamily }: ScribeProps
-): void => {
-  ctx.font = `${fontSize}px ${fontFamily}`;
-  ctx.lineWidth = 1;
-  ctx.lineJoin = "round"; // to avoid spikes we can join each line with a round joint
-  ctx.strokeStyle = ctx.fillStyle = color;
-};
-
 const useScribe = (
   ref: RefObject<HTMLCanvasElement>,
-  props: ScribeProps
-): number[] => {
-  const { text, color, fontSize, fontFamily, ...options } = props;
-  const textProperties = [text, color, fontSize, fontFamily];
+  { text, color, fontSize, fontFamily, ...options }: ScribeProps
+): void => {
+  useEffect(
+    () => {
+      if (!ref || !ref.current) {
+        return;
+      }
+      const { current: canvas } = ref;
 
-  const size = useMemo(() => {
-    const ctx = document.createElement("canvas").getContext("2d");
-    if (!ctx) return [0, 0];
-    setContext(ctx, props);
-    return [
-      ctx.measureText(text).width,
-      fontSize * 1.4 // This is wrong way to do it, but there is no sane other option
-    ];
-  }, textProperties);
+      const token = { cancel: false };
 
-  useEffect(() => {
-    if (!ref || !ref.current) {
-      return;
-    }
-    const { current: canvas } = ref;
+      const ctx = canvas.getContext("2d");
+      if (ctx) {
+        ctx.font = `${fontSize}px ${fontFamily}`;
+        ctx.lineWidth = 1;
+        ctx.lineJoin = "round"; // to avoid spikes we can join each line with a round joint
+        ctx.strokeStyle = ctx.fillStyle = color;
 
-    const token = { cancel: false };
+        // This bogus delay is needed to allow the canvas to update its properties before measuring text
+        setTimeout(() => {
+          const textProps = text
+            .split("")
+            .reduce((ac: TextDescription[], av: string): TextDescription[] => {
+              const last = ac.length > 0 ? ac[ac.length - 1] : null;
+              ac.push({
+                char: av,
+                x: last ? last.x + ctx.measureText(last.char).width : 0
+              });
+              return ac;
+            }, []);
 
-    const ctx = canvas.getContext("2d");
-    if (ctx) {
-      setContext(ctx, props);
+          const params = {
+            width: canvas.width,
+            height: canvas.height,
+            textVertPos: canvas.height * 0.675
+          };
 
-      // This bogus delay is needed to allow the canvas to update its properties before measuring text
-      setTimeout(() => {
-        const textProps = text
-          .split("")
-          .reduce((ac: TextDescription[], av: string): TextDescription[] => {
-            const last = ac.length > 0 ? ac[ac.length - 1] : null;
-            ac.push({
-              char: av,
-              x: last ? last.x + ctx.measureText(last.char).width : 0
-            });
-            return ac;
-          }, []);
+          updateCanvas(
+            textProps,
+            ctx,
+            params,
+            0,
+            DEFAULT_DASH_OFFSET,
+            options,
+            token
+          );
+        }, 50);
+      }
 
-        const params = {
-          width: canvas.width,
-          height: canvas.height,
-          textVertPos: canvas.height * 0.675
-        };
-
-        updateCanvas(
-          textProps,
-          ctx,
-          params,
-          0,
-          DEFAULT_DASH_OFFSET,
-          options,
-          token
-        );
-      }, 50);
-    }
-
-    return () => {
-      token.cancel = true;
-    };
-  }, textProperties);
-
-  return size;
+      return () => {
+        token.cancel = true;
+      };
+    },
+    [text, color, fontSize, fontFamily]
+  );
 };
 
 export default useScribe;

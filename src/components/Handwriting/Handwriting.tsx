@@ -1,6 +1,7 @@
 import React, { useRef } from "react";
 
 import { colors, fonts } from "../../style/theme";
+import useTextSize from "../../hooks/useTextSize";
 import useScribe from "./useScribe";
 
 interface HandwritingProps {
@@ -46,7 +47,8 @@ const Handwriting = ({
   fill = true
 }: HandwritingProps): React.ReactChild => {
   const ref = useRef<HTMLCanvasElement>(null);
-  const [width, height] = useScribe(ref, {
+  const [width, height] = useTextSize({ text, fontFamily, fontSize });
+  useScribe(ref, {
     text,
     color,
     fontFamily,
