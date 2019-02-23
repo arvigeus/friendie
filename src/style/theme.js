@@ -4,10 +4,10 @@ export const fonts = {
 };
 
 export const fontSizes = {
-  small: "12px",
-  normal: "16px",
-  medium: "22px",
-  large: "32px"
+  small: "16px",
+  normal: "20px",
+  medium: "26px",
+  large: "36px"
 };
 
 export const colors = {
