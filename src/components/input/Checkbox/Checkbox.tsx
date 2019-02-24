@@ -6,6 +6,10 @@ import { fonts, fontSizes, colors } from "../../../style/theme";
 
 interface CheckboxProps extends React.HTMLProps<HTMLInputElement> {
   label: string;
+  /**
+   * Color of label text and checkbox
+   * @default #333
+   */
   color?: string;
   /**
    * The element will take all the vertical space and will put label and checkbox at the opposite ends
@@ -14,6 +18,7 @@ interface CheckboxProps extends React.HTMLProps<HTMLInputElement> {
   row?: boolean;
   /**
    * Reverse the order of label and checkbox
+   * @default false
    */
   reverse?: boolean;
 }
@@ -22,8 +27,8 @@ interface LabelProps extends React.HTMLProps<HTMLLabelElement> {
   color: string;
   disabledColor: string;
   disabled: boolean;
-  row?: boolean;
-  reverse?: boolean;
+  row: boolean;
+  reverse: boolean;
 }
 
 interface InputProps extends React.HTMLProps<HTMLInputElement> {
@@ -37,20 +42,20 @@ const lineWidth = Math.sqrt(Math.pow(width - padding * 2, 2) * 2);
 const Checkbox = ({
   label,
   color = colors.black,
-  disabled,
-  row,
-  reverse,
+  disabled = false,
+  row = false,
+  reverse = false,
   ...props
 }: CheckboxProps): React.ReactChild => {
   const disabledColor = desaturate(0.2, color);
   const input = (
     // @ts-ignore
     <Input
-      type="checkbox"
       color={color}
       disabledColor={disabledColor}
       disabled={disabled}
       {...props}
+      type="checkbox"
     />
   );
   return (
@@ -112,12 +117,6 @@ const Input = styled.input<InputProps>`
     will-change: width;
   }
 
-  &:disabled + span::before,
-  &:disabled + span::after {
-    background-color: ${({ disabledColor }) => disabledColor};
-    opacity: 0.5;
-  }
-
   & + span::before {
     left: ${padding}px;
     transform: rotate(45deg);
@@ -129,6 +128,12 @@ const Input = styled.input<InputProps>`
     right: ${padding}px;
     transform: rotate(-45deg);
     transform-origin: right;
+  }
+
+  &:disabled + span::before,
+  &:disabled + span::after {
+    background-color: ${({ disabledColor }) => disabledColor};
+    opacity: 0.5;
   }
 
   &:checked + span::before,
