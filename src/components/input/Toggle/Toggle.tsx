@@ -1,11 +1,17 @@
 import React, { useRef } from "react";
 import styled from "styled-components/macro";
+import { desaturate } from "polished";
 
 import { fonts, fontSizes, colors } from "../../../style/theme";
 import useMaxComponentWidth from "./useMaxComponentWidth";
 
 interface ToggleProps extends React.HTMLProps<HTMLInputElement> {
   label: string;
+  /**
+   * Color of label text and toggle
+   * @default #333
+   */
+  color?: string;
   /**
    * The element that will be rendered when checkbox is unchecked
    */
@@ -19,26 +25,56 @@ interface ToggleProps extends React.HTMLProps<HTMLInputElement> {
    * @default false
    */
   row?: boolean;
+  /**
+   * Reverse the order of label and toggle
+   * @default false
+   */
+  reverse?: boolean;
 }
 
 interface LabelProps extends React.HTMLProps<HTMLLabelElement> {
-  row?: boolean;
+  color: string;
+  disabledColor: string;
+  disabled?: boolean;
+  row: boolean;
+  reverse: boolean;
+}
+
+interface InputProps extends React.HTMLProps<HTMLInputElement> {
+  disabledColor: string;
 }
 
 const Toggle = ({
   label,
+  color = colors.black,
+  disabled = false,
   uncheckedOption,
   checkedOption,
-  row,
+  row = false,
+  reverse = false,
   ...props
 }: ToggleProps): React.ReactChild => {
   const uncheckedRef = useRef(null);
   const checkedRef = useRef(null);
   const width = useMaxComponentWidth(uncheckedRef, checkedRef) || "auto";
-  // @ts-ignore
-  const input = <Input type="checkbox" {...props} />;
+  const disabledColor = desaturate(0.2, color);
+  const input = (
+    // @ts-ignore
+    <Input
+      disabledColor={disabledColor}
+      disabled={disabled}
+      {...props}
+      type="checkbox"
+    />
+  );
   return (
-    <Label row={row}>
+    <Label
+      disabledColor={disabledColor}
+      color={color}
+      disabled={disabled}
+      row={row}
+      reverse={reverse}
+    >
       {label} {input}{" "}
       <span style={{ width }}>
         <span style={{ width }} ref={uncheckedRef}>
@@ -56,22 +92,25 @@ const Label = styled.label<LabelProps>`
   display: inline-flex;
   width: ${({ row }) => (row ? "100%" : "auto")};
   box-sizing: border-box;
-  flex-direction: row;
+  flex-direction: ${({ reverse }) => (reverse ? "row-reverse" : "row")};
   flex-wrap: wrap;
   justify-content: ${({ row }) => (row ? "space-between" : "flex-start")};
-  color: ${colors.black};
+  color: ${({ disabled, disabledColor, color }) =>
+    disabled ? disabledColor : color};
   font-family: ${fonts.interface};
   font-size: ${fontSizes.normal};
+  opacity: ${({ disabled }) => (disabled ? 0.5 : 1)};
 `;
 
-const Input = styled.input<HTMLInputElement>`
+const Input = styled.input<InputProps>`
   display: none;
 
   & + span {
     display: inline-block;
     overflow: hidden;
     box-sizing: border-box;
-    border-bottom: 2px solid ${colors.black};
+    margin: 0 4px;
+    border-bottom: 2px solid ${({ color }) => color};
     font-family: ${fonts.handwriting};
     text-align: center;
     white-space: nowrap;
@@ -84,8 +123,29 @@ const Input = styled.input<HTMLInputElement>`
     will-change: transform;
   }
 
+  &:disabled + span {
+    border-color: ${({ disabledColor }) => disabledColor};
+    opacity: 0.5;
+  }
+
+  & + span > span:first-child {
+    user-select: text;
+  }
+
+  & + span > span:last-child {
+    user-select: none;
+  }
+
   &:checked + span > span {
     transform: translate(-100%);
+  }
+
+  &:checked + span > span:first-child {
+    user-select: none;
+  }
+
+  &:checked + span > span:last-child {
+    user-select: text;
   }
 `;
 

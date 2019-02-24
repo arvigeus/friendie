@@ -6,6 +6,7 @@ route: /components/toggle
 
 import { Playground, PropsTable } from "docz";
 import Toggle from "./Toggle";
+import { colors } from "../../../style/theme";
 
 # Toggle
 
@@ -17,17 +18,6 @@ HTML checkbox styled as toggle button
 
 <Playground>
   <Toggle label="Toggle" checkedOption="On" uncheckedOption="Off" />
-</Playground>
-
-## As a row
-
-<Playground>
-  <Toggle
-    label="Toggle"
-    checkedOption="Enabled"
-    uncheckedOption="Disabled"
-    row
-  />
 </Playground>
 
 ## With custom elements
@@ -58,4 +48,82 @@ HTML checkbox styled as toggle button
       </svg>
     }
   />
+</Playground>
+
+## As a row
+
+<Playground>
+  <Toggle
+    label="Toggle"
+    checkedOption="Enabled"
+    uncheckedOption="Disabled"
+    row
+  />
+</Playground>
+
+## Reversed
+
+<Playground>
+  <Toggle label="please!" checkedOption="Yes" uncheckedOption="No" reverse />
+  <br />
+  <br />
+  <Toggle
+    label="please!"
+    checkedOption="Yes"
+    uncheckedOption="No"
+    reverse
+    row
+  />
+</Playground>
+
+## Colors
+
+<Playground>
+  <div
+    style={{
+      display: "flex",
+      justifyContent: "space-between",
+      marginBottom: "40px"
+    }}
+  >
+    <Toggle checkedOption="✓" uncheckedOption="X" label="Red" color={colors.red} />
+
+    <Toggle checkedOption="✓" uncheckedOption="X" label="Green" color={colors.green} />
+
+    <Toggle checkedOption="✓" uncheckedOption="X" label="Blue" color={colors.blue} />
+
+    <Toggle checkedOption="✓" uncheckedOption="X" label="Pink" color={colors.pink} />
+
+    <Toggle checkedOption="✓" uncheckedOption="X" label="Yellow" color={colors.yellow} />
+
+    <Toggle checkedOption="✓" uncheckedOption="X" label="Orange" color={colors.orange} />
+
+  </div>
+</Playground>
+
+## Disabled
+
+<Playground>
+  <div
+    style={{
+      display: "flex",
+      justifyContent: "space-between",
+      marginBottom: "40px"
+    }}
+  >
+    <Toggle checkedOption="✓" uncheckedOption="X" disabled label="Red" color={colors.red} />
+
+    <Toggle checkedOption="✓" uncheckedOption="X" disabled label="Green" color={colors.green} />
+
+    <Toggle checkedOption="✓" uncheckedOption="X" disabled label="Blue" color={colors.blue} />
+
+    <Toggle checkedOption="✓" uncheckedOption="X" disabled label="Pink" color={colors.pink} />
+
+    <Toggle checkedOption="✓" uncheckedOption="X" disabled label="Yellow" color={colors.yellow} />
+
+    <Toggle checkedOption="✓" uncheckedOption="X" disabled label="Orange" color={colors.orange} />
+
+  </div>
+
+  <Toggle checkedOption="true" uncheckedOption="false" label="Toggle" disabled />
 </Playground>
