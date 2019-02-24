@@ -1,0 +1,40 @@
+---
+name: Video
+menu: Components
+route: /components/video
+---
+
+import { Playground, PropsTable } from "docz";
+import Video from "./Video";
+
+# Video
+
+Responsive embedded video as a filmstrip in 16:9 aspect ratio. Supports YouTube, Vimeo, DailyMotion (and possibly others)
+
+<PropsTable of={Video} />
+
+## Basic usage
+
+### Youtube
+
+<Playground>
+  <Video
+    src="https://www.youtube.com/watch?v=U3ucpVlaeK8"
+    title="Hoàng Thùy Linh - Bánh Trôi Nước (Woman)"
+  />
+</Playground>
+
+### Vimeo
+
+<Playground>
+  <Video src="https://vimeo.com/13628090" title="Poets of the Fall - Lift" />
+</Playground>
+
+### DailyMotion
+
+<Playground>
+  <Video
+    src="https://www.dailymotion.com/video/x17xjyv"
+    title="Where the hell is Matt? (2008)"
+  />
+</Playground>
