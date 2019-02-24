@@ -1,0 +1,77 @@
+---
+name: Radio
+menu: Components
+route: /components/radio
+---
+
+import { Playground, PropsTable } from "docz";
+import Radio from "./Radio";
+import { colors } from "../../../style/theme";
+
+# Radio
+
+A styled HTML radio
+
+<PropsTable of={Radio} />
+
+## Basic usage
+
+<Playground>
+  <Radio name="basic" label="Unchecked" /> <br />
+  <Radio name="basic" label="Checked" defaultChecked />
+</Playground>
+
+## As a row
+
+<Playground>
+  <Radio name="row" label="Unchecked" row /> <br />
+  <Radio name="row" label="Checked" defaultChecked row />
+</Playground>
+
+## Reversed
+
+<Playground>
+  <Radio name="reversed" label="Unchecked" reverse /> <br />
+  <Radio name="reversed" label="Checked" defaultChecked reverse /><br/><br />
+
+  <Radio name="reversed-row" label="Unchecked" row reverse /> <br />
+  <Radio name="reversed-row" label="Checked" defaultChecked row reverse />
+</Playground>
+
+## Colors
+
+<Playground>
+    <Radio name="colors" label="Red" color={colors.red} /><br />
+
+    <Radio name="colors" label="Green" color={colors.green} /><br />
+
+    <Radio name="colors" label="Blue" color={colors.blue} /><br />
+
+    <Radio name="colors" label="Pink" color={colors.pink} /><br />
+
+    <Radio name="colors" label="Yellow" color={colors.yellow} /><br />
+
+    <Radio name="colors" label="Orange" color={colors.orange} /><br />
+
+    <Radio name="colors" label="Black" />
+
+</Playground>
+
+## Disabled
+
+<Playground>
+    <Radio disabled name="colors" label="Red" color={colors.red} /><br />
+
+    <Radio disabled name="colors" label="Green" color={colors.green} /><br />
+
+    <Radio disabled name="colors" label="Blue" color={colors.blue} /><br />
+
+    <Radio disabled name="colors" label="Pink" color={colors.pink} /><br />
+
+    <Radio disabled name="colors" label="Yellow" color={colors.yellow} /><br />
+
+    <Radio disabled name="colors" label="Orange" color={colors.orange} /><br />
+
+    <Radio disabled name="colors" label="Black" />
+
+</Playground>
