@@ -1,0 +1,137 @@
+---
+name: Checkbox
+menu: Components
+route: /components/checkbox
+---
+
+import { Playground, PropsTable } from "docz";
+import Checkbox from "./Checkbox";
+import { colors } from "../../../style/theme";
+
+# Checkbox
+
+A styled HTML checkbox
+
+<PropsTable of={Checkbox} />
+
+## Basic usage
+
+<Playground>
+  <Checkbox label="Unchecked" /> <br /> <br />
+  <Checkbox label="Checked" defaultChecked />
+</Playground>
+
+## As a row
+
+<Playground>
+  <Checkbox label="Checkbox" row />
+</Playground>
+
+## Reversed
+
+<Playground>
+  <Checkbox label="Checkbox" reverse /> <br /> <br />
+  <Checkbox label="Checkbox" reverse row />
+</Playground>
+
+## Colors
+
+<Playground>
+  <div
+    style={{
+      display: "flex",
+      justifyContent: "space-between",
+      marginBottom: "40px"
+    }}
+  >
+    <Checkbox label="Red" color={colors.red} />
+
+    <Checkbox label="Green" color={colors.green} />
+
+    <Checkbox label="Blue" color={colors.blue} />
+
+    <Checkbox label="Pink" color={colors.pink} />
+
+    <Checkbox label="Yellow" color={colors.yellow} />
+
+    <Checkbox label="Orange" color={colors.orange} />
+
+  </div>
+
+  <div
+    style={{
+      display: "flex",
+      justifyContent: "space-between",
+      marginBottom: "40px"
+    }}
+  >
+    <Checkbox defaultChecked label="Red" color={colors.red} />
+
+    <Checkbox defaultChecked label="Green" color={colors.green} />
+
+    <Checkbox defaultChecked label="Blue" color={colors.blue} />
+
+    <Checkbox defaultChecked label="Pink" color={colors.pink} />
+
+    <Checkbox defaultChecked label="Yellow" color={colors.yellow} />
+
+    <Checkbox defaultChecked label="Orange" color={colors.orange} />
+
+  </div>
+</Playground>
+
+## Disabled
+
+<Playground>
+  <div
+    style={{
+      display: "flex",
+      justifyContent: "space-between",
+      marginBottom: "40px"
+    }}
+  >
+    <Checkbox disabled label="Red" color={colors.red} />
+
+    <Checkbox disabled label="Green" color={colors.green} />
+
+    <Checkbox disabled label="Blue" color={colors.blue} />
+
+    <Checkbox disabled label="Pink" color={colors.pink} />
+
+    <Checkbox disabled label="Yellow" color={colors.yellow} />
+
+    <Checkbox disabled label="Orange" color={colors.orange} />
+
+  </div>
+
+  <div
+    style={{
+      display: "flex",
+      justifyContent: "space-between",
+      marginBottom: "40px"
+    }}
+  >
+    <Checkbox disabled defaultChecked label="Red" color={colors.red} />
+
+    <Checkbox disabled defaultChecked label="Green" color={colors.green} />
+
+    <Checkbox disabled defaultChecked label="Blue" color={colors.blue} />
+
+    <Checkbox disabled defaultChecked label="Pink" color={colors.pink} />
+
+    <Checkbox disabled defaultChecked label="Yellow" color={colors.yellow} />
+
+    <Checkbox disabled defaultChecked label="Orange" color={colors.orange} />
+
+  </div>
+
+  <div
+    style={{
+      display: "flex",
+      justifyContent: "space-around"
+    }}
+  >
+  <Checkbox label="Unchecked" disabled />
+  <Checkbox defaultChecked label="Checked" disabled />
+  </div>
+</Playground>
