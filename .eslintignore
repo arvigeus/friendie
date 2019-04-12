@@ -1,2 +1,1 @@
-vendor/**/*.js
 src/serviceWorker.ts

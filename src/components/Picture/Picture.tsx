@@ -1,6 +1,6 @@
 import React from "react";
 import styled, { css } from "styled-components/macro";
-import { ImgResource } from "the-platform";
+// import { ImgResource } from "the-platform";
 
 import { colors, fonts } from "../../style/theme";
 
@@ -52,7 +52,7 @@ const Picture = ({
   fontSize = "32px",
   ...props
 }: PictureProps): React.ReactChild => {
-  ImgResource.read(src);
+  // ImgResource.read(src);
   return (
     <Polaroid>
       {aspectRatio ? (
