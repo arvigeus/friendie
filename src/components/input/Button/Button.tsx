@@ -1,6 +1,6 @@
 import React from "react";
 import styled from "styled-components/macro";
-import { lighten, desaturate } from "polished";
+import { desaturate, lighten } from "polished";
 
 import { colors, fonts } from "../../../style/theme";
 
@@ -60,8 +60,8 @@ const colorDisabled = ({ color = colors.black }: ButtonProps): string =>
 
 const StyledButton = styled.button<ButtonProps>`
   display: inline-block;
-  box-sizing: border-box;
   align-self: center;
+  box-sizing: border-box;
   padding: 16px;
   border: solid 2px
     ${({ color = colors.black, backgroundColor = "transparent" }) =>

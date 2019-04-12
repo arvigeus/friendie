@@ -2,8 +2,8 @@ import URL from "url";
 
 /**
  * Transforms link to embedded
- * @param src Address of video
- * @returns Url suitable for embedding
+ * @param {string} src Address of video
+ * @returns {string} Url suitable for embedding
  */
 const getEmbeddedLink = (src: string): string => {
   const url = URL.parse(src, true);

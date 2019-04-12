@@ -37,9 +37,9 @@ const Filmstrip = styled.div`
     position: absolute;
     top: 0;
     left: 0;
+    box-sizing: border-box;
     width: 99%;
     height: 98%;
-    box-sizing: border-box;
     margin: 0.5%;
   }
 
@@ -57,14 +57,14 @@ const Filmstrip = styled.div`
 
   &::before,
   &::after {
+    content: "";
     position: absolute;
     top: 0;
     display: block;
     width: 20px;
     height: 100%;
-    background-repeat: repeat-y;
     background-size: 100% 20px;
-    content: "";
+    background-repeat: repeat-y;
   }
 `;
 

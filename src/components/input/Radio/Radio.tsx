@@ -2,7 +2,7 @@ import React from "react";
 import styled from "styled-components/macro";
 import { desaturate } from "polished";
 
-import { fonts, fontSizes, colors } from "../../../style/theme";
+import { colors, fontSizes, fonts } from "../../../style/theme";
 
 interface RadioProps extends React.HTMLProps<HTMLInputElement> {
   label: string;
@@ -73,11 +73,11 @@ const Radio = ({
 
 const Label = styled.label<LabelProps>`
   display: inline-flex;
-  width: ${({ row }) => (row ? "100%" : "auto")};
-  box-sizing: border-box;
-  flex-direction: ${({ reverse }) => (reverse ? "row-reverse" : "row")};
   flex-wrap: wrap;
+  flex-direction: ${({ reverse }) => (reverse ? "row-reverse" : "row")};
   justify-content: ${({ row }) => (row ? "space-between" : "flex-start")};
+  box-sizing: border-box;
+  width: ${({ row }) => (row ? "100%" : "auto")};
   color: ${({ disabled, disabledColor, color }) =>
     disabled ? disabledColor : color};
   font-family: ${fonts.interface};
@@ -91,11 +91,11 @@ const Input = styled.input<InputProps>`
   & + span {
     position: relative;
     display: inline-block;
+    box-sizing: border-box;
     width: ${width}px;
     height: ${width}px;
-    box-sizing: border-box;
-    margin: 0 4px;
     border: 2px solid ${({ color }) => color};
+    margin: 0 4px;
     border-radius: 50%;
     transition: border-width 0.2s linear;
     will-change: border-width;

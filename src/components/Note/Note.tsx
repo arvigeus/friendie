@@ -1,6 +1,6 @@
 import styled from "styled-components/macro";
 import React from "react";
-import { transparentize, darken } from "polished";
+import { darken, transparentize } from "polished";
 
 import { colors } from "../../style/theme";
 

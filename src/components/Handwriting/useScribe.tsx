@@ -57,7 +57,7 @@ const updateCanvas = (
   ]);
 
   // reduce length of off-dash
-  dashOffset -= options.speed;
+  dashOffset -= options.speed; // eslint-disable-line no-param-reassign
 
   // draw char to canvas with current dash-length
   ctx.strokeText(text[i].char, text[i].x, textVertPos);
@@ -74,6 +74,7 @@ const updateCanvas = (
     }
 
     // if we still have chars left, loop animation again for this char
+    // eslint-disable-next-line no-param-reassign
     if (++i < text.length) {
       requestAnimationFrame(() =>
         updateCanvas(text, ctx, params, i, DEFAULT_DASH_OFFSET, options, token)
@@ -101,59 +102,56 @@ const useScribe = (
   ref: RefObject<HTMLCanvasElement>,
   { text, color, fontSize, fontFamily, ...options }: ScribeProps
 ): void => {
-  useEffect(
-    () => {
-      if (!ref || !ref.current) {
-        return;
-      }
-      const { current: canvas } = ref;
+  useEffect(() => {
+    if (!ref || !ref.current) {
+      return;
+    }
+    const { current: canvas } = ref;
 
-      const token = { cancel: false };
+    const token = { cancel: false };
 
-      const ctx = canvas.getContext("2d");
-      if (ctx) {
-        ctx.font = `${fontSize}px ${fontFamily}`;
-        ctx.lineWidth = 1;
-        ctx.lineJoin = "round"; // to avoid spikes we can join each line with a round joint
-        ctx.strokeStyle = ctx.fillStyle = color;
+    const ctx = canvas.getContext("2d");
+    if (ctx) {
+      ctx.font = `${fontSize}px ${fontFamily}`;
+      ctx.lineWidth = 1;
+      ctx.lineJoin = "round"; // to avoid spikes we can join each line with a round joint
+      ctx.strokeStyle = ctx.fillStyle = color;
 
-        // This bogus delay is needed to allow the canvas to update its properties before measuring text
-        setTimeout(() => {
-          const textProps = text
-            .split("")
-            .reduce((ac: TextDescription[], av: string): TextDescription[] => {
-              const last = ac.length > 0 ? ac[ac.length - 1] : null;
-              ac.push({
-                char: av,
-                x: last ? last.x + ctx.measureText(last.char).width : 0
-              });
-              return ac;
-            }, []);
+      // This bogus delay is needed to allow the canvas to update its properties before measuring text
+      setTimeout(() => {
+        const textProps = text
+          .split("")
+          .reduce((ac: TextDescription[], av: string): TextDescription[] => {
+            const last = ac.length > 0 ? ac[ac.length - 1] : null;
+            ac.push({
+              char: av,
+              x: last ? last.x + ctx.measureText(last.char).width : 0
+            });
+            return ac;
+          }, []);
 
-          const params = {
-            width: canvas.width,
-            height: canvas.height,
-            textVertPos: canvas.height * 0.675
-          };
+        const params = {
+          width: canvas.width,
+          height: canvas.height,
+          textVertPos: canvas.height * 0.675
+        };
 
-          updateCanvas(
-            textProps,
-            ctx,
-            params,
-            0,
-            DEFAULT_DASH_OFFSET,
-            options,
-            token
-          );
-        }, 50);
-      }
+        updateCanvas(
+          textProps,
+          ctx,
+          params,
+          0,
+          DEFAULT_DASH_OFFSET,
+          options,
+          token
+        );
+      }, 50);
+    }
 
-      return () => {
-        token.cancel = true;
-      };
-    },
-    [text, color, fontSize, fontFamily]
-  );
+    return () => {
+      token.cancel = true;
+    };
+  }, [text, color, fontSize, fontFamily]);
 };
 
 export default useScribe;

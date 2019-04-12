@@ -65,35 +65,6 @@
       "git add"
     ]
   },
-  "eslintConfig": {
-    "extends": [
-      "react-app"
-    ],
-    "rules": {
-      "no-console": "warn"
-    }
-  },
-  "stylelint": {
-    "defaultSeverity": "warning",
-    "processors": [
-      "stylelint-processor-styled-components"
-    ],
-    "extends": [
-      "stylelint-config-recommended",
-      "stylelint-config-styled-components",
-      "stylelint-config-idiomatic-order",
-      "./node_modules/prettier-stylelint/config.js"
-    ],
-    "rules": {
-      "indentation": null
-    }
-  },
-  "browserslist": [
-    ">0.2%",
-    "not dead",
-    "not ie <= 11",
-    "not op_mini all"
-  ],
   "devDependencies": {
     "@commitlint/cli": "^7.5.2",
     "@commitlint/config-conventional": "^7.5.0",
@@ -113,11 +84,16 @@
     "prettier-stylelint": "0.4.2",
     "react-testing-library": "^6.1.2",
     "semantic-release": "^15.13.3",
-    "stylelint": "^9.10.1",
-    "stylelint-config-idiomatic-order": "^6.2.0",
-    "stylelint-config-recommended": "^2.1.0",
-    "stylelint-config-styled-components": "^0.1.1",
-    "stylelint-processor-styled-components": "^1.6.0",
+    "stylelint": "9.10.1",
+    "stylelint-a11y": "1.1.11",
+    "stylelint-config-idiomatic-css": "1.0.6",
+    "stylelint-config-prettier": "^5.0.0",
+    "stylelint-config-standard": "18.2.0",
+    "stylelint-config-styled-components": "0.1.1",
+    "stylelint-declaration-block-no-ignored-properties": "^1.1.0",
+    "stylelint-high-performance-animation": "^1.1.1",
+    "stylelint-no-unsupported-browser-features": "^3.0.2",
+    "stylelint-processor-styled-components": "1.6.0",
     "ts-jest": "^24.0.2",
     "url-loader": "^1.1.2",
     "webpack-bundle-analyzer": "^3.3.2"

@@ -30,19 +30,19 @@ const GlobalStyle = createGlobalStyle`
   #root {
     position: relative;
     z-index: 0;
+    overflow-x: hidden;
     width: 100%;
     height: 100%;
     padding: 20px 40px;
     margin: 0;
     background-image: url(${background});
-    overflow-x: hidden;
   }
 
   main {
     position: relative;
+    box-sizing: border-box;
     width: 100%;
     min-height: 300px;
-    box-sizing: border-box;
     padding: 20px 40px;
   }
 
@@ -58,11 +58,11 @@ const GlobalStyle = createGlobalStyle`
 
   main::before,
   main::after {
+    content: "";
     position: absolute;
     width: 99%;
     height: 95%;
     max-height: 600px;
-    content: "";
   }
 
   main::before {
