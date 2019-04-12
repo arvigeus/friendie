@@ -61,5 +61,4 @@ const Handwriting = ({
   return <canvas width={width} height={height} ref={ref} />;
 };
 
-// export default React.memo(Handwriting);
 export default Handwriting;

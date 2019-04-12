@@ -15,5 +15,4 @@ const Loading = ({
   <Suspense fallback={<Handwriting text={text} />}>{children}</Suspense>
 );
 
-// export default React.memo(Loading);
 export default Loading;
