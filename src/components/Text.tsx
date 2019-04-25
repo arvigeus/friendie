@@ -19,6 +19,7 @@ const style = css<TextProps>`
   color: ${({ color }) => color || colors.black};
   font-family: ${({ fontFamily }) => fontFamily || fonts.interface};
   font-size: ${({ fontSize }) => fontSize || fontSizes.normal};
+  -webkit-font-smoothing: antialiased;
 `;
 
 const Text = styled.span<StyledTextProps>`

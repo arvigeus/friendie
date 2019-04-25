@@ -151,7 +151,7 @@ const useScribe = (
     return () => {
       token.cancel = true;
     };
-  }, [text, color, fontSize, fontFamily]);
+  }, [text, color, fontSize, fontFamily, ref, options]);
 };
 
 export default useScribe;

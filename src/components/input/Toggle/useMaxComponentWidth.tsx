@@ -10,7 +10,7 @@ const useMaxComponentWidth = (
       setWidth(
         Math.max(unchecked.current.offsetWidth, checked.current.offsetWidth) + 8
       );
-  }, []);
+  }, [checked, unchecked]);
   return width;
 };
 
