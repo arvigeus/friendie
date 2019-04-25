@@ -1,0 +1,110 @@
+export const KEY_A = 65;
+export const KEY_B = 66;
+export const KEY_C = 67;
+export const KEY_D = 68;
+export const KEY_E = 69;
+export const KEY_F = 70;
+export const KEY_G = 71;
+export const KEY_H = 72;
+export const KEY_I = 73;
+export const KEY_J = 74;
+export const KEY_K = 75;
+export const KEY_L = 76;
+export const KEY_M = 77;
+export const KEY_N = 78;
+export const KEY_O = 79;
+export const KEY_P = 80;
+export const KEY_Q = 81;
+export const KEY_R = 82;
+export const KEY_S = 83;
+export const KEY_T = 84;
+export const KEY_U = 85;
+export const KEY_V = 86;
+export const KEY_W = 87;
+export const KEY_X = 88;
+export const KEY_Y = 89;
+export const KEY_Z = 90;
+
+// NUMBERS
+export const KEY_ZERO = 48;
+export const KEY_ONE = 49;
+export const KEY_TWO = 50;
+export const KEY_THREE = 51;
+export const KEY_FOUR = 52;
+export const KEY_FIVE = 53;
+export const KEY_SIX = 54;
+export const KEY_SEVEN = 55;
+export const KEY_EIGHT = 56;
+export const KEY_NINE = 57;
+
+// NUMPAD
+export const KEY_NUMPAD_0 = 96;
+export const KEY_NUMPAD_1 = 97;
+export const KEY_NUMPAD_2 = 98;
+export const KEY_NUMPAD_3 = 99;
+export const KEY_NUMPAD_4 = 100;
+export const KEY_NUMPAD_5 = 101;
+export const KEY_NUMPAD_6 = 102;
+export const KEY_NUMPAD_7 = 103;
+export const KEY_NUMPAD_8 = 104;
+export const KEY_NUMPAD_9 = 105;
+export const KEY_NUMPAD_MULTIPLY = 106;
+export const KEY_NUMPAD_ADD = 107;
+export const KEY_NUMPAD_ENTER = 108;
+export const KEY_NUMPAD_SUBTRACT = 109;
+export const KEY_NUMPAD_DECIMAL = 110;
+export const KEY_NUMPAD_DIVIDE = 111;
+
+// FUNCTION KEYS
+export const KEY_F1 = 112;
+export const KEY_F2 = 113;
+export const KEY_F3 = 114;
+export const KEY_F4 = 115;
+export const KEY_F5 = 116;
+export const KEY_F6 = 117;
+export const KEY_F7 = 118;
+export const KEY_F8 = 119;
+export const KEY_F9 = 120;
+export const KEY_F10 = 121;
+export const KEY_F11 = 122;
+export const KEY_F12 = 123;
+export const KEY_F13 = 124;
+export const KEY_F14 = 125;
+export const KEY_F15 = 126;
+
+// SYMBOLS
+export const KEY_COLON = 186;
+export const KEY_EQUALS = 187;
+export const KEY_UNDERSCORE = 189;
+export const KEY_QUESTION_MARK = 191;
+export const KEY_TILDE = 192;
+export const KEY_OPEN_BRACKET = 219;
+export const KEY_BACKWARD_SLASH = 220;
+export const KEY_CLOSED_BRACKET = 221;
+export const KEY_QUOTES = 222;
+export const KEY_LESS_THAN = 188;
+export const KEY_GREATER_THAN = 190;
+
+// OTHER KEYS
+export const KEY_BACKSPACE = 8;
+export const KEY_TAB = 9;
+export const KEY_CLEAR = 12;
+export const KEY_ENTER = 13;
+export const KEY_SHIFT = 16;
+export const KEY_CONTROL = 17;
+export const KEY_ALT = 18;
+export const KEY_CAPS_LOCK = 20;
+export const KEY_ESC = 27;
+export const KEY_SPACEBAR = 32;
+export const KEY_PAGE_UP = 33;
+export const KEY_PAGE_DOWN = 34;
+export const KEY_END = 35;
+export const KEY_HOME = 36;
+export const KEY_LEFT = 37;
+export const KEY_UP = 38;
+export const KEY_RIGHT = 39;
+export const KEY_DOWN = 40;
+export const KEY_INSERT = 45;
+export const KEY_DELETE = 46;
+export const KEY_HELP = 47;
+export const KEY_NUM_LOCK = 144;

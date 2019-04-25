@@ -1,0 +1,30 @@
+---
+name: Dropdown
+menu: Components
+route: /components/dropdown
+---
+
+import { Playground, Props } from "docz";
+import Text from "../../Text";
+import Dropdown from "./Dropdown";
+
+# Dropdown
+
+A styled HTML select
+
+<Props of={Dropdown} />
+
+## Basic usage
+
+<Playground>
+  <Text>What should I have for breakfast today?</Text>{" "}
+  <Dropdown
+    name="breakfast"
+    placeholder="Hmmm..."
+    options={{
+      "bacon-omelette": "Bacon Omelette",
+      "belgian-waffle": "Belgian Waffle",
+      pancakes: "Pancakes"
+    }}
+  />
+</Playground>
